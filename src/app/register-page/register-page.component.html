@@ -1,0 +1,23 @@
+<div class="content">
+    <div class="header">
+        <div>
+            <app-action-button class="input" [text]="'Regresar'" (action)="onClickRegresar()"></app-action-button>
+        </div>
+        <div class="image-container">
+            <img class="iconImage" src="assets/chat-icon.png" alt="">
+        </div>
+    </div>
+    <div class="body">
+        <div class="panel">
+            <h1>Registrarse</h1>
+            <app-input [id]="'nickname'" [iconSource]="'assets/user.svg'" [type]="'text'" [description]="'Nickname'"
+                (onInputChange)="onInputChange($event)"></app-input>
+            <app-input [id]="'email'" [iconSource]="'assets/email.svg'" [type]="'email'" [description]="'Correo'"
+                (onInputChange)="onInputChange($event)"></app-input>
+            <app-input [id]="'password'" [iconSource]="'assets/password.svg'" [type]="'password'"
+                [description]="'Contraseña'" (onInputChange)="onInputChange($event)"></app-input>
+            <app-action-button [text]="'Registrarse'" (action)="onClickRegistrarse()"></app-action-button>
+        </div>
+
+    </div>
+</div>

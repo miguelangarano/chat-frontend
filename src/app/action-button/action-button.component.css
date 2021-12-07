@@ -1,0 +1,25 @@
+div {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #D3007B;
+    font-weight: bold;
+    color: white;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    height: 50px;
+    padding: 0 20px;
+    width: fit-content;
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+div:active {
+    background: #AA0063;
+}
+
+div:hover {
+    cursor: pointer;
+}

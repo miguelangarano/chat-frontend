@@ -1,0 +1,30 @@
+div {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #EDEDED;
+    width: 230px;
+    border-radius: 15px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 20px;
+    gap: 10px;
+}
+
+img {
+    width: 25px;
+    height: 25px;
+}
+
+input {
+    height: 100%;
+    width: calc(100% - 55px);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+input:focus {
+    outline: none;
+}
