@@ -25,7 +25,7 @@ export class RegisterPageComponent implements OnInit {
     }
 
     onClickRegresar() {
-
+        this.router.navigateByUrl("/login")
     }
 
     async onClickRegistrarse() {

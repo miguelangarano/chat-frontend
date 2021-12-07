@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="body">
-        <div class="panel">
+        <app-panel>
             <h1>Registrarse</h1>
             <app-input [id]="'nickname'" [iconSource]="'assets/user.svg'" [type]="'text'" [description]="'Nickname'"
                 (onInputChange)="onInputChange($event)"></app-input>
@@ -17,7 +17,6 @@
             <app-input [id]="'password'" [iconSource]="'assets/password.svg'" [type]="'password'"
                 [description]="'Contraseña'" (onInputChange)="onInputChange($event)"></app-input>
             <app-action-button [text]="'Registrarse'" (action)="onClickRegistrarse()"></app-action-button>
-        </div>
-
+        </app-panel>
     </div>
 </div>
