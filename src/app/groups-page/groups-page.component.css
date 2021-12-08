@@ -40,9 +40,10 @@ h1 {
     color: white;
 }
 
-.upload-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 100%;
-    background-color: tomato;
+.scroll-container {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 400px;
 }

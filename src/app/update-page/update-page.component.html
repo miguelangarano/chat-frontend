@@ -19,9 +19,12 @@
         </app-panel>
         <app-panel>
             <h1>Cambio de Imagen</h1>
-            <div class="upload-image"></div>
+            <div class="upload-image">
+                <img [src]="uploadSrc" alt="">
+            </div>
             <app-input [id]="'file'" [iconSource]="'assets/upload.svg'" [type]="'file'"
                 [description]="'Nueva Contraseña'" (onInputChange)="onInputChange($event)"></app-input>
+            <app-action-button [text]="'Subir Imagen'" (action)="onClickActualizar()"></app-action-button>
         </app-panel>
     </div>
 </div>

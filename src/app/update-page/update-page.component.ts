@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
     selector: 'app-update-page',
@@ -10,23 +11,56 @@ export class UpdatePageComponent implements OnInit {
 
     router: Router
 
-    constructor(ruteador: Router) {
+    uploadSrc: string = ""
+
+    newPassword: string = ""
+    oldPassword: string = ""
+
+    authService: AuthService
+
+    constructor(ruteador: Router, servicio: AuthService) {
         this.router = ruteador
+        this.authService = servicio
     }
 
     ngOnInit(): void {
     }
 
     onClickRegresar() {
-        this.router.navigateByUrl("/")
+        this.router.navigateByUrl("/groups")
     }
 
-    onClickLogOut() { }
+    onClickLogOut() {
+        this.authService.logOut()
+    }
 
     onInputChange(e: any) {
-
+        switch (e.id) {
+            case "oldpassword": {
+                this.oldPassword = e.event
+                break
+            }
+            case "newpassword": {
+                this.newPassword = e.event
+                break
+            }
+            default: {
+                break
+            }
+        }
     }
 
-    onClickActualizar() { }
+    async onClickActualizar() {
+        if (this.newPassword !== "" && this.oldPassword !== "") {
+            const response = await this.authService.update(this.oldPassword, this.newPassword)
+            if (response) {
+                alert("Datos actualizados")
+            } else {
+                alert("Los datos no se pudieron actualizar")
+            }
+        } else {
+            alert("Los campos no pueden estar vacíos.")
+        }
+    }
 
 }

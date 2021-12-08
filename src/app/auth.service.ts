@@ -1,21 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
+    router: Router
+
     email: string = ""
     nickname: string = ""
     token: string = ""
 
     clienteHttp: HttpClient
-    constructor(cliente: HttpClient) {
+    constructor(cliente: HttpClient, ruteador: Router) {
         this.clienteHttp = cliente
+        this.router = ruteador
     }
 
     checkLoginUser(): boolean {
+        const localEmail = localStorage.getItem("email")
+        const localNickname = localStorage.getItem("nickname")
+        const localToken = localStorage.getItem("token")
+        if (localEmail && localNickname && localToken) {
+            this.email = localEmail
+            this.nickname = localNickname
+            this.token = localToken
+            return true
+        }
         return false
     }
 
@@ -61,11 +74,37 @@ export class AuthService {
         }
     }
 
-    update(): boolean {
-        return false
+    async update(password: string, newPassword: string): Promise<boolean> {
+        try {
+            this.checkLoginUser()
+            const data = await this.clienteHttp.patch(
+                "http://localhost:4123/user/update",
+                { password, newPassword },
+                {
+                    headers: {
+                        email: this.email,
+                        nickname: this.nickname,
+                        accesstoken: this.token
+                    }
+                },
+            ).toPromise()
+            const parsedData = JSON.parse(JSON.stringify(data))
+            if (parsedData.status === true) {
+                return true
+            }
+            alert("Error no se pudo realizar la actualizción de datos. " + parsedData.data.error)
+            return false
+        } catch (error) {
+            console.log(error)
+            return false
+        }
     }
 
-    logOut(): boolean {
-        return false
+    logOut(): void {
+        localStorage.clear()
+        this.email = ""
+        this.nickname = ""
+        this.token = ""
+        this.router.navigateByUrl("/login")
     }
 }

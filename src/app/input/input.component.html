@@ -7,7 +7,7 @@
 
 
 <div *ngIf="type==='file'" class="input-file-container">
-    <input type="file" accept="image/*" #file>
+    <input type="file" accept="image/*" #file (change)="uploadFile($event)">
     <span>{{fileName}}</span>
     <img src="{{iconSource}}" (click)="file.click()">
 </div>

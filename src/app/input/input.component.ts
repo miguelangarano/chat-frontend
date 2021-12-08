@@ -12,6 +12,7 @@ export class InputComponent implements OnInit {
     textInput: string = ""
     internalType: string = "text"
     fileName: string = "Nombre del archivo"
+    file: any
 
     ngOnInit(): void {
         this.internalType = this.type
@@ -26,6 +27,17 @@ export class InputComponent implements OnInit {
 
     onChange(e: any) {
         this.onInputChange.emit({ event: e, id: this.id })
+    }
+
+    uploadFile(e: any) {
+        const element = e.currentTarget as HTMLInputElement;
+        let fileList: FileList | null = element.files;
+        if (fileList) {
+            console.log(fileList[0])
+            this.fileName = fileList[0].name
+            console.log(fileList[0], fileList)
+            this.onInputChange.emit({ event: fileList[0], id: this.id })
+        }
     }
 
     obscurePassword() {

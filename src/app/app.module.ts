@@ -11,6 +11,8 @@ import { InputComponent } from './input/input.component';
 import { PanelComponent } from './panel/panel.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { UpdatePageComponent } from './update-page/update-page.component';
+import { GroupsPageComponent } from './groups-page/groups-page.component';
+import { GroupItemComponent } from './group-item/group-item.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import { UpdatePageComponent } from './update-page/update-page.component';
         InputComponent,
         PanelComponent,
         LoginPageComponent,
-        UpdatePageComponent
+        UpdatePageComponent,
+        GroupsPageComponent,
+        GroupItemComponent
     ],
     imports: [
         BrowserModule,

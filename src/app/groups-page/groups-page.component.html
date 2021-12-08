@@ -1,0 +1,26 @@
+<div class="content">
+    <div class="header">
+        <div class="buttons-container">
+            <app-action-button class="input" [text]="'Ver Información'" (action)="onClickUpdate()"></app-action-button>
+            <app-action-button class="input" [text]="'Cerrar Sesión'" (action)="onClickLogOut()"></app-action-button>
+        </div>
+        <div class="image-container">
+            <img class="iconImage" src="assets/chat-icon.png" alt="">
+        </div>
+    </div>
+    <div class="body">
+        <app-panel>
+            <h1>Lista de Grupos de Chat</h1>
+            <div class="scroll-container">
+                <div *ngFor="let chat of chats">
+                    <app-group-item *ngIf="chat.status===true" [name]="chat.name" [buttonText]="'Entrar'"
+                        (action)="onClickJoinButton()"></app-group-item>
+                    <app-group-item *ngIf="chat.status===false" [name]="chat.name" [buttonText]="'Unirse'"
+                        (action)="onClickJoinButton()">
+                    </app-group-item>
+                </div>
+
+            </div>
+        </app-panel>
+    </div>
+</div>
