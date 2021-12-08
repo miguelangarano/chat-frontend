@@ -19,8 +19,25 @@ export class AuthService {
         return false
     }
 
-    logIn(): boolean {
-        return false
+    async logIn(email: string, password: string): Promise<boolean> {
+        try {
+            const data = await this.clienteHttp.post("http://localhost:4123/user/login", { email, password }).toPromise()
+            const parsedData = JSON.parse(JSON.stringify(data))
+            if (parsedData.status === true) {
+                this.email = parsedData.data.email
+                this.nickname = parsedData.data.nickname
+                this.token = parsedData.data.token
+                localStorage.setItem("email", this.email)
+                localStorage.setItem("nickname", this.nickname)
+                localStorage.setItem("token", this.token)
+                return true
+            }
+            alert("Error no se pudo realizar el inicio de sesión. " + parsedData.data.error)
+            return false
+        } catch (error) {
+            console.log(error)
+            return false
+        }
     }
 
     async register(nickname: string, email: string, password: string): Promise<boolean> {

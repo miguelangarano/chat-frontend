@@ -1,4 +1,13 @@
-<div>
+<div *ngIf="type!=='file'" class="input-text-container">
     <img src="{{iconSource}}">
-    <input type="{{type}}" placeholder="{{description}}" [ngModel]="textInput" (ngModelChange)="onChange($event)">
+    <input type="{{internalType}}" placeholder="{{description}}" [ngModel]="textInput"
+        (ngModelChange)="onChange($event)">
+    <img *ngIf="type==='password'" src="assets/show.svg" (click)="obscurePassword()" />
+</div>
+
+
+<div *ngIf="type==='file'" class="input-file-container">
+    <input type="file" accept="image/*" #file>
+    <span>{{fileName}}</span>
+    <img src="{{iconSource}}" (click)="file.click()">
 </div>

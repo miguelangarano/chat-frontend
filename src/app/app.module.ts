@@ -9,6 +9,8 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { ActionButtonComponent } from './action-button/action-button.component';
 import { InputComponent } from './input/input.component';
 import { PanelComponent } from './panel/panel.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { UpdatePageComponent } from './update-page/update-page.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +18,9 @@ import { PanelComponent } from './panel/panel.component';
         RegisterPageComponent,
         ActionButtonComponent,
         InputComponent,
-        PanelComponent
+        PanelComponent,
+        LoginPageComponent,
+        UpdatePageComponent
     ],
     imports: [
         BrowserModule,
