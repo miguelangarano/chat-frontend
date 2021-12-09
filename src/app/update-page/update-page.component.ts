@@ -44,10 +44,20 @@ export class UpdatePageComponent implements OnInit {
                 this.newPassword = e.event
                 break
             }
+            case "file": {
+                var fr = new FileReader();
+                fr.onload = () => this.readFile(fr)
+                fr.readAsDataURL(e.event);
+                break
+            }
             default: {
                 break
             }
         }
+    }
+
+    readFile(fr: any) {
+        this.uploadSrc = fr.result
     }
 
     async onClickActualizar() {

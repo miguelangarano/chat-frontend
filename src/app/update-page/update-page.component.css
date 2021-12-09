@@ -46,3 +46,10 @@ h1 {
     border-radius: 100%;
     background-color: tomato;
 }
+
+.upload-image>img {
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    background-color: tomato;
+}

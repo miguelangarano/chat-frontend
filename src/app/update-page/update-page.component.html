@@ -20,7 +20,7 @@
         <app-panel>
             <h1>Cambio de Imagen</h1>
             <div class="upload-image">
-                <img [src]="uploadSrc" alt="">
+                <img *ngIf="uploadSrc!==''" [src]="uploadSrc" alt="">
             </div>
             <app-input [id]="'file'" [iconSource]="'assets/upload.svg'" [type]="'file'"
                 [description]="'Nueva Contraseña'" (onInputChange)="onInputChange($event)"></app-input>
