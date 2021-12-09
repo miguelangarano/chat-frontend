@@ -100,6 +100,32 @@ export class AuthService {
         }
     }
 
+    async updateImage(imageUrl: string): Promise<boolean> {
+        try {
+            this.checkLoginUser()
+            const data = await this.clienteHttp.patch(
+                "http://localhost:4123/user/update",
+                { imageUrl },
+                {
+                    headers: {
+                        email: this.email,
+                        nickname: this.nickname,
+                        accesstoken: this.token
+                    }
+                },
+            ).toPromise()
+            const parsedData = JSON.parse(JSON.stringify(data))
+            if (parsedData.status === true) {
+                return true
+            }
+            alert("Error no se pudo realizar la actualizción de datos. " + parsedData.data.error)
+            return false
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
+
     logOut(): void {
         localStorage.clear()
         this.email = ""

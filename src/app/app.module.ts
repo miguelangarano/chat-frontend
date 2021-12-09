@@ -13,6 +13,10 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { UpdatePageComponent } from './update-page/update-page.component';
 import { GroupsPageComponent } from './groups-page/groups-page.component';
 import { GroupItemComponent } from './group-item/group-item.component';
+import { environment } from "../environments/environment";
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
     declarations: [
@@ -30,9 +34,12 @@ import { GroupItemComponent } from './group-item/group-item.component';
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireStorageModule
     ],
-    providers: [],
+    providers: [
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
