@@ -42,6 +42,7 @@ export class UpdatePageComponent implements OnInit {
     }
 
     onInputChange(e: any) {
+        console.log(e)
         switch (e.id) {
             case "oldpassword": {
                 this.oldPassword = e.event
@@ -68,7 +69,7 @@ export class UpdatePageComponent implements OnInit {
         const file = this.currentFile
         const filePath = this.currentFile.name;
         const fileRef = this.storage.ref(filePath);
-        const task = this.storage.upload(filePath, file).then(() => {
+        this.storage.upload(filePath, file).then(() => {
             const download = fileRef.getDownloadURL();
             console.log(download)
             download.subscribe((url: string) => {
