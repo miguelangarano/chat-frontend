@@ -25,9 +25,9 @@ export class ChatsService {
         try {
             const data = await this.httpClient.get("http://localhost:4123/chat/all", {
                 headers: {
-                    email: this.authService.email,
-                    nickname: this.authService.nickname,
-                    accesstoken: this.authService.token
+                    email: this.authService.user.email,
+                    nickname: this.authService.user.nickname,
+                    accesstoken: this.authService.user.token ?? ""
                 }
             }).toPromise()
             const parsedData = JSON.parse(JSON.stringify(data))
@@ -38,11 +38,11 @@ export class ChatsService {
 
 
         try {
-            const data1 = await this.httpClient.get("http://localhost:4123/chat/user/" + this.authService.nickname, {
+            const data1 = await this.httpClient.get("http://localhost:4123/chat/user/" + this.authService.user.nickname, {
                 headers: {
-                    email: this.authService.email,
-                    nickname: this.authService.nickname,
-                    accesstoken: this.authService.token
+                    email: this.authService.user.email,
+                    nickname: this.authService.user.nickname,
+                    accesstoken: this.authService.user.token ?? ""
                 }
             }).toPromise()
             const parsedData1 = JSON.parse(JSON.stringify(data1))

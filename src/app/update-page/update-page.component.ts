@@ -31,6 +31,12 @@ export class UpdatePageComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getUserData()
+    }
+
+    async getUserData() {
+        await this.authService.getUserData()
+        this.uploadSrc = this.authService.user.imageUrl ?? ""
     }
 
     onClickRegresar() {

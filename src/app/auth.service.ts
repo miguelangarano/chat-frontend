@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from './user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -9,9 +10,12 @@ export class AuthService {
 
     router: Router
 
-    email: string = ""
-    nickname: string = ""
-    token: string = ""
+    user: User = {
+        email: "",
+        nickname: "",
+        token: "",
+        imageUrl: ""
+    }
 
     clienteHttp: HttpClient
     constructor(cliente: HttpClient, ruteador: Router) {
@@ -19,14 +23,44 @@ export class AuthService {
         this.router = ruteador
     }
 
+    async getUserData() {
+        this.checkLoginUser()
+        try {
+            this.checkLoginUser()
+            const data = await this.clienteHttp.get(
+                "http://localhost:4123/user/" + this.user.nickname,
+                {
+                    headers: {
+                        email: this.user.email,
+                        nickname: this.user.nickname,
+                        accesstoken: this.user.token ?? ""
+                    }
+                },
+            ).toPromise()
+            const parsedData = JSON.parse(JSON.stringify(data))
+            if (parsedData.status === true) {
+                this.user.email = parsedData.data.user.email
+                this.user.nickname = parsedData.data.user.nickname
+                this.user.token = parsedData.data.user.token
+                this.user.imageUrl = parsedData.data.user.imageUrl
+                return true
+            }
+            alert("Error no se pudo consultar los datos. " + parsedData.data.error)
+            return false
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
+
     checkLoginUser(): boolean {
         const localEmail = localStorage.getItem("email")
         const localNickname = localStorage.getItem("nickname")
         const localToken = localStorage.getItem("token")
         if (localEmail && localNickname && localToken) {
-            this.email = localEmail
-            this.nickname = localNickname
-            this.token = localToken
+            this.user.email = localEmail
+            this.user.nickname = localNickname
+            this.user.token = localToken
             return true
         }
         return false
@@ -37,12 +71,12 @@ export class AuthService {
             const data = await this.clienteHttp.post("http://localhost:4123/user/login", { email, password }).toPromise()
             const parsedData = JSON.parse(JSON.stringify(data))
             if (parsedData.status === true) {
-                this.email = parsedData.data.email
-                this.nickname = parsedData.data.nickname
-                this.token = parsedData.data.token
-                localStorage.setItem("email", this.email)
-                localStorage.setItem("nickname", this.nickname)
-                localStorage.setItem("token", this.token)
+                this.user.email = parsedData.data.email
+                this.user.nickname = parsedData.data.nickname
+                this.user.token = parsedData.data.token
+                localStorage.setItem("email", this.user.email)
+                localStorage.setItem("nickname", this.user.nickname)
+                localStorage.setItem("token", this.user.token ?? "")
                 return true
             }
             alert("Error no se pudo realizar el inicio de sesión. " + parsedData.data.error)
@@ -58,12 +92,12 @@ export class AuthService {
             const data = await this.clienteHttp.post("http://localhost:4123/user/register", { email, nickname, password }).toPromise()
             const parsedData = JSON.parse(JSON.stringify(data))
             if (parsedData.status === true) {
-                this.email = parsedData.data.email
-                this.nickname = parsedData.data.nickname
-                this.token = parsedData.data.token
-                localStorage.setItem("email", this.email)
-                localStorage.setItem("nickname", this.nickname)
-                localStorage.setItem("token", this.token)
+                this.user.email = parsedData.data.email
+                this.user.nickname = parsedData.data.nickname
+                this.user.token = parsedData.data.token
+                localStorage.setItem("email", this.user.email)
+                localStorage.setItem("nickname", this.user.nickname)
+                localStorage.setItem("token", this.user.token ?? "")
                 return true
             }
             alert("Error no se pudo realizar el registro. " + parsedData.data.error)
@@ -82,9 +116,9 @@ export class AuthService {
                 { password, newPassword },
                 {
                     headers: {
-                        email: this.email,
-                        nickname: this.nickname,
-                        accesstoken: this.token
+                        email: this.user.email,
+                        nickname: this.user.nickname,
+                        accesstoken: this.user.token ?? ""
                     }
                 },
             ).toPromise()
@@ -108,9 +142,9 @@ export class AuthService {
                 { imageUrl },
                 {
                     headers: {
-                        email: this.email,
-                        nickname: this.nickname,
-                        accesstoken: this.token
+                        email: this.user.email,
+                        nickname: this.user.nickname,
+                        accesstoken: this.user.token ?? ""
                     }
                 },
             ).toPromise()
@@ -128,9 +162,9 @@ export class AuthService {
 
     logOut(): void {
         localStorage.clear()
-        this.email = ""
-        this.nickname = ""
-        this.token = ""
+        this.user.email = ""
+        this.user.nickname = ""
+        this.user.token = ""
         this.router.navigateByUrl("/login")
     }
 }
