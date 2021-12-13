@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service'
-import { SimpleChat } from './chat.model';
+import { Chat, SimpleChat } from './chat.model';
+import { User } from './user.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ChatsService {
+
+    currentChat: Chat | undefined = undefined
 
     httpClient: HttpClient
     authService: AuthService
@@ -65,5 +68,70 @@ export class ChatsService {
 
         console.log("CHATS", allChats, userChats)
         return currentChats
+    }
+
+
+    async joinChatGroup(groupName: string) {
+        try {
+            this.authService.getUserData()
+            const data = await this.httpClient.patch("http://localhost:4123/chat/add-group-member",
+                {
+                    groupName,
+                    newMember: this.authService.user
+                },
+                {
+                    headers: {
+                        email: this.authService.user.email,
+                        nickname: this.authService.user.nickname,
+                        accesstoken: this.authService.user.token ?? ""
+                    }
+                }).toPromise()
+            const parsedData = JSON.parse(JSON.stringify(data))
+            if (parsedData.status) {
+                return true
+            } else {
+                alert("No se pudo agregar miembro.")
+                return false
+            }
+        } catch (error) {
+            console.log(error)
+            alert("No se pudo agregar miembro.")
+            return false
+        }
+    }
+
+    async getChatData(name: string) {
+        try {
+            this.authService.getUserData()
+            const data = await this.httpClient.get("http://localhost:4123/chat/" + name,
+                {
+                    headers: {
+                        email: this.authService.user.email,
+                        nickname: this.authService.user.nickname,
+                        accesstoken: this.authService.user.token ?? ""
+                    }
+                }).toPromise()
+            const parsedData = JSON.parse(JSON.stringify(data))
+            if (parsedData.status) {
+                this.currentChat = parsedData.data.chat
+                console.log(parsedData.data.chat)
+                return true
+            } else {
+                alert("No se pudo agregar miembro.")
+                return false
+            }
+        } catch (error) {
+            console.log(error)
+            alert("No se pudo agregar miembro.")
+            return false
+        }
+    }
+
+    setCurrentChat(name: string) {
+        localStorage.setItem("currentChatName", name)
+    }
+
+    getCurrentChat() {
+        return localStorage.getItem("currentChatName")
     }
 }

@@ -3,7 +3,7 @@ export class Chat {
         public name: string,
         public adminNickname: string,
         public users: ChatUser[],
-        public messages: ChatMessage[]
+        public message: ChatMessage[]
     ) { }
 }
 

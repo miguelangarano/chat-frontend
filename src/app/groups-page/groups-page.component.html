@@ -14,9 +14,9 @@
             <div class="scroll-container">
                 <div *ngFor="let chat of chats">
                     <app-group-item *ngIf="chat.status===true" [name]="chat.name" [buttonText]="'Entrar'"
-                        (action)="onClickJoinButton()"></app-group-item>
+                        (action)="onClickEnterButton(chat.name)"></app-group-item>
                     <app-group-item *ngIf="chat.status===false" [name]="chat.name" [buttonText]="'Unirse'"
-                        (action)="onClickJoinButton()">
+                        (action)="onClickJoinButton(chat.name)">
                     </app-group-item>
                 </div>
 

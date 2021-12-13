@@ -17,7 +17,14 @@ import { environment } from "../environments/environment";
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { provideStorage,getStorage } from '@angular/fire/storage';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { ChatPageComponent } from './chat-page/chat-page.component';
+import { MessageContainerComponent } from './message-container/message-container.component';
+
+
+import { SocketIoModule } from 'ngx-socket-io';
+import { CookieService } from 'ngx-cookie-service';
+import { WebsocketService } from './websocket.service';
 
 @NgModule({
     declarations: [
@@ -29,7 +36,9 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
         LoginPageComponent,
         UpdatePageComponent,
         GroupsPageComponent,
-        GroupItemComponent
+        GroupItemComponent,
+        ChatPageComponent,
+        MessageContainerComponent
     ],
     imports: [
         BrowserModule,
@@ -38,9 +47,12 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
         FormsModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireStorageModule,
-        provideStorage(() => getStorage())
+        provideStorage(() => getStorage()),
+        SocketIoModule
     ],
     providers: [
+        WebsocketService,
+        CookieService
     ],
     bootstrap: [AppComponent]
 })

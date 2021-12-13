@@ -38,8 +38,16 @@ export class GroupsPageComponent implements OnInit {
         this.authService.logOut()
     }
 
-    onClickJoinButton() {
+    onClickEnterButton(chatName: string) {
+        this.chatsService.setCurrentChat(chatName)
+        this.router.navigateByUrl('/chat')
+    }
 
+    async onClickJoinButton(chatName: string) {
+        const response = await this.chatsService.joinChatGroup(chatName)
+        if (response) {
+            this.querySimpleChats()
+        }
     }
 
 }
